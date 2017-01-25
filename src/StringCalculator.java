@@ -7,13 +7,13 @@ public class StringCalculator {
     {
         if (s.length() > 0)
         {
-            if (s.charAt(s.length() - 1) == '1')
+            for (Integer num = 0; num < 9; num++)
             {
-                return 1;
-            }
-            else if (s.equals("2"))
-            {
-                return 2;
+                char c = s.charAt(s.length() - 1);
+                if (String.valueOf(c).equals(num.toString()))
+                {
+                    return num;
+                }
             }
         }
         return 0;
