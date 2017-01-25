@@ -5,13 +5,16 @@ public class StringCalculator {
 
     public static int Add(String s)
     {
-        if (s.equals("1"))
+        if (s.length() > 0)
         {
-            return 1;
-        }
-        else if (s.equals("2"))
-        {
-            return 2;
+            if (s.charAt(s.length() - 1) == '1')
+            {
+                return 1;
+            }
+            else if (s.equals("2"))
+            {
+                return 2;
+            }
         }
         return 0;
     }
