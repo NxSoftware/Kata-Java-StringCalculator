@@ -5,25 +5,20 @@ public class StringCalculator {
 
     public static int Add(String s)
     {
-        if (s.length() > 0)
+        int number = 0;
+        String[] digitStrings = s.split(",");
+        for (String digitString : digitStrings)
         {
-            int firstNum = getInteger(s, 0);
-            int lastNum = 0;
-            if (s.length() > 1)
-            {
-                lastNum = getInteger(s, s.length() - 1);
-            }
-            return firstNum + lastNum;
+            number += getInteger(digitString);
         }
-        return 0;
+        return number;
     }
 
-    private static int getInteger(String s, int characterPosition)
+    private static int getInteger(String s)
     {
         for (Integer num = 0; num < 9; num++)
         {
-            char c = s.charAt(characterPosition);
-            if (String.valueOf(c).equals(num.toString()))
+            if (s.equals(num.toString()))
             {
                 return num;
             }
