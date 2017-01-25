@@ -9,6 +9,10 @@ public class StringCalculator {
         {
             return 1;
         }
+        else if (s.equals("2"))
+        {
+            return 2;
+        }
         return 0;
     }
 

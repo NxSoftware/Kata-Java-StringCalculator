@@ -14,6 +14,7 @@ public class StringCalculatorTests {
         assertEquals(0, StringCalculator.Add(""));
         assertEquals(0, StringCalculator.Add("0"));
         assertEquals(1, StringCalculator.Add("1"));
+        assertEquals(2, StringCalculator.Add("2"));
     }
 
 }
