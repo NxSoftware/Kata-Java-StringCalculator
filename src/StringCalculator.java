@@ -1,3 +1,7 @@
+import com.sun.deploy.util.StringUtils;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by steve on 25/01/2017.
  */
@@ -20,13 +24,22 @@ public class StringCalculator {
     private static int getSum(String[] numbers)
     {
         int number = 0;
+        List<String> negatives = new ArrayList();
         for (String digitString : numbers)
         {
             if (digitString.startsWith("-"))
             {
-                throw new NumberFormatException("Negatives not allowed: " + digitString);
+                negatives.add(digitString);
             }
-            number += Integer.parseInt(digitString);
+            else
+            {
+                number += Integer.parseInt(digitString);
+            }
+        }
+        if (negatives.size() > 0)
+        {
+            String n = StringUtils.join(negatives, ",");
+            throw new NumberFormatException("Negatives not allowed: " + n);
         }
         return number;
     }

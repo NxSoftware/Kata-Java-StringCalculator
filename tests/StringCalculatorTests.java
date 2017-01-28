@@ -77,9 +77,16 @@ public class StringCalculatorTests {
     @Test
     void negativeNumbersThrowException()
     {
-        NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {
+        NumberFormatException ex;
+
+        ex = assertThrows(NumberFormatException.class, () -> {
             StringCalculator.Add("-1,2");
         });
         assertEquals(ex.getMessage(), "Negatives not allowed: -1");
+
+        ex = assertThrows(NumberFormatException.class, () -> {
+            StringCalculator.Add("2,-4,3,-5");
+        });
+        assertEquals(ex.getMessage(), "Negatives not allowed: -4,-5");
     }
 }
