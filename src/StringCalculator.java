@@ -66,7 +66,15 @@ public class StringCalculator {
     {
         if (hasCustomDelimiter(s))
         {
-            return Pattern.quote(s.substring(2, 3));
+            if (s.charAt(2) == '[')
+            {
+                int indexOfClosingBracket = s.indexOf("]");
+                return Pattern.quote(s.substring(3, indexOfClosingBracket));
+            }
+            else
+            {
+                return Pattern.quote(s.substring(2, 3));
+            }
         }
         return null;
     }

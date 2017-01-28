@@ -98,4 +98,10 @@ public class StringCalculatorTests {
         assertEquals(0, StringCalculator.Add("1001,0"));
         assertEquals(1, StringCalculator.Add("1001,1"));
     }
+
+    @Test
+    void customDelimitersOfAnyLength()
+    {
+        assertEquals(6, StringCalculator.Add("//[|||]|\n1|||2|||3"));
+    }
 }
