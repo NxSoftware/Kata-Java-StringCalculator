@@ -14,7 +14,12 @@ public class StringCalculator {
 
         String delimiter = delimiter(s);
         String[] numbers = numbers(s, delimiter);
+        return getSum(numbers);
+    }
 
+    private static int getSum(String[] numbers)
+    {
+        int number = 0;
         for (String digitString : numbers)
         {
             number += Integer.parseInt(digitString);
