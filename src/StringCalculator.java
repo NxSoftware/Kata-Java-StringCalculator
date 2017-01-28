@@ -33,11 +33,7 @@ public class StringCalculator {
             }
             else
             {
-                int n = Integer.parseInt(digitString);
-                if (n <= 1000)
-                {
-                    number += n;
-                }
+                number += parseNumber(digitString);
             }
         }
         if (negatives.size() > 0)
@@ -48,6 +44,12 @@ public class StringCalculator {
         return number;
     }
 
+    private static int parseNumber(String digitString)
+    {
+        int n = Integer.parseInt(digitString);
+        return (n > 1000) ? 0 : n;
+    }
+    
     private static String delimiter(String s)
     {
         if (hasCustomDelimiter(s))
