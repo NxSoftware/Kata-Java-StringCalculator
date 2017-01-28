@@ -27,14 +27,7 @@ public class StringCalculator {
         List<String> negatives = new ArrayList();
         for (String digitString : numbers)
         {
-            if (digitString.startsWith("-"))
-            {
-                negatives.add(digitString);
-            }
-            else
-            {
-                number += parseNumber(digitString);
-            }
+            number += getNumber(digitString, negatives);
         }
         if (negatives.size() > 0)
         {
@@ -42,6 +35,19 @@ public class StringCalculator {
             throw new NumberFormatException("Negatives not allowed: " + n);
         }
         return number;
+    }
+
+    private static int getNumber(String digitString, List<String> negatives)
+    {
+        if (digitString.startsWith("-"))
+        {
+            negatives.add(digitString);
+            return 0;
+        }
+        else
+        {
+            return parseNumber(digitString);
+        }
     }
 
     private static int parseNumber(String digitString)
