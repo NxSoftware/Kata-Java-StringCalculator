@@ -53,4 +53,9 @@ public class StringCalculatorTests {
         assertEquals(4, StringCalculator.Add("1,1,1,1"));
     }
 
+    @Test
+    void lineBreaksAndCommasSeparateNumbers()
+    {
+        assertEquals(0, StringCalculator.Add("0\n0,0"));
+    }
 }
