@@ -33,7 +33,11 @@ public class StringCalculator {
             }
             else
             {
-                number += Integer.parseInt(digitString);
+                int n = Integer.parseInt(digitString);
+                if (n <= 1000)
+                {
+                    number += n;
+                }
             }
         }
         if (negatives.size() > 0)
