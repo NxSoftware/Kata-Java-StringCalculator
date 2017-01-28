@@ -29,12 +29,17 @@ public class StringCalculator {
         {
             number += getNumber(digitString, negatives);
         }
+        disallowNegatives(negatives);
+        return number;
+    }
+
+    private static void disallowNegatives(List<String> negatives)
+    {
         if (negatives.size() > 0)
         {
             String n = StringUtils.join(negatives, ",");
             throw new NumberFormatException("Negatives not allowed: " + n);
         }
-        return number;
     }
 
     private static int getNumber(String digitString, List<String> negatives)
