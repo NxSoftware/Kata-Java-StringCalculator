@@ -5,6 +5,11 @@ public class StringCalculator {
 
     public static int Add(String s)
     {
+        if (s.startsWith("//"))
+        {
+            return 0;
+        }
+
         int number = 0;
 
         if (s.length() == 0)

@@ -60,4 +60,10 @@ public class StringCalculatorTests {
         assertEquals(1, StringCalculator.Add("0\n1,0"));
         assertEquals(2, StringCalculator.Add("1\n1,0"));
     }
+
+    @Test
+    void customDelimiters()
+    {
+        assertEquals(0, StringCalculator.Add("//;\n0;0"));
+    }
 }
