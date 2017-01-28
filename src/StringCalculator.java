@@ -1,6 +1,7 @@
 import com.sun.deploy.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -64,24 +65,28 @@ public class StringCalculator {
     
     private static String delimiter(String s)
     {
-        if (hasCustomDelimiter(s))
+        String customDelimiter = customDelimiter(s);
+        if (customDelimiter != null)
         {
-            if (s.charAt(2) == '[')
-            {
-                int indexOfClosingBracket = s.indexOf("]");
-                return Pattern.quote(s.substring(3, indexOfClosingBracket));
-            }
-            else
-            {
-                return Pattern.quote(s.substring(2, 3));
-            }
+            return Pattern.quote(customDelimiter);
         }
         return null;
     }
 
-    private static boolean hasCustomDelimiter(String s)
+    private static String customDelimiter(String s)
     {
-        return s.startsWith("//");
+        Pattern p = Pattern.compile("//(?:\\[(.*)\\]|(.))\\n");
+        Matcher m = p.matcher(s);
+        if (m.find())
+        {
+            String customLengthDelimiter = m.group(1);
+            if (customLengthDelimiter == null)
+            {
+                return m.group(2);
+            }
+            return customLengthDelimiter;
+        }
+        return null;
     }
 
     private static String[] numbers(String input, String delimiter)

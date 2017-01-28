@@ -102,6 +102,6 @@ public class StringCalculatorTests {
     @Test
     void customDelimitersOfAnyLength()
     {
-        assertEquals(6, StringCalculator.Add("//[|||]|\n1|||2|||3"));
+        assertEquals(6, StringCalculator.Add("//[|||]\n1|||2|||3"));
     }
 }
