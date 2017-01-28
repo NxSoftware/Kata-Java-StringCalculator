@@ -2,6 +2,8 @@ import com.sun.tools.javac.tree.JCTree;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.expectThrows;
 
 /**
  * Created by steve on 25/01/2017.
@@ -70,5 +72,14 @@ public class StringCalculatorTests {
         assertEquals(0, StringCalculator.Add("//|\n0|0"));
         assertEquals(1, StringCalculator.Add("//|\n0|1"));
         assertEquals(2, StringCalculator.Add("//|\n1|1"));
+    }
+
+    @Test
+    void negativeNumbersThrowException()
+    {
+        NumberFormatException ex = assertThrows(NumberFormatException.class, () -> {
+            StringCalculator.Add("-1,2");
+        });
+        assertEquals(ex.getMessage(), "Negatives not allowed: -1");
     }
 }

@@ -22,6 +22,10 @@ public class StringCalculator {
         int number = 0;
         for (String digitString : numbers)
         {
+            if (digitString.startsWith("-"))
+            {
+                throw new NumberFormatException("Negatives not allowed: " + digitString);
+            }
             number += Integer.parseInt(digitString);
         }
         return number;
