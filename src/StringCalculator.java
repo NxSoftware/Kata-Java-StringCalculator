@@ -1,6 +1,7 @@
 import com.sun.deploy.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Created by steve on 25/01/2017.
@@ -65,8 +66,7 @@ public class StringCalculator {
     {
         if (hasCustomDelimiter(s))
         {
-            int indexOfLineBreak = s.indexOf("\n");
-            return "\\" + s.substring(2, indexOfLineBreak);
+            return Pattern.quote(s.substring(2, 3));
         }
         return null;
     }
