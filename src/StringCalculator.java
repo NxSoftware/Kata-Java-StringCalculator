@@ -5,9 +5,13 @@ public class StringCalculator {
 
     public static int Add(String s)
     {
+        String delimiter = "\n,";
+
         if (s.startsWith("//"))
         {
-            return 0;
+            int indexOfLineBreak = s.indexOf("\n");
+            delimiter = s.substring(2, indexOfLineBreak);
+            s = s.substring(indexOfLineBreak + 1);
         }
 
         int number = 0;
@@ -17,7 +21,7 @@ public class StringCalculator {
             return number;
         }
 
-        String[] digitStrings = s.split("[\n,]");
+        String[] digitStrings = s.split("[" + delimiter + "]");
         for (String digitString : digitStrings)
         {
             number += Integer.parseInt(digitString);

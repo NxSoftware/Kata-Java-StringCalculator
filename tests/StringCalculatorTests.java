@@ -65,5 +65,6 @@ public class StringCalculatorTests {
     void customDelimiters()
     {
         assertEquals(0, StringCalculator.Add("//;\n0;0"));
+        assertEquals(1, StringCalculator.Add("//;\n0;1"));
     }
 }
