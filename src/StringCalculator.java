@@ -5,15 +5,6 @@ public class StringCalculator {
 
     public static int Add(String s)
     {
-        String delimiter = "\n,";
-
-        if (s.startsWith("//"))
-        {
-            int indexOfLineBreak = s.indexOf("\n");
-            delimiter = s.substring(2, indexOfLineBreak);
-            s = s.substring(indexOfLineBreak + 1);
-        }
-
         int number = 0;
 
         if (s.length() == 0)
@@ -21,12 +12,46 @@ public class StringCalculator {
             return number;
         }
 
-        String[] digitStrings = s.split("[" + delimiter + "]");
-        for (String digitString : digitStrings)
+        String delimiter = delimiter(s);
+        String[] numbers = numbers(s, delimiter);
+
+        for (String digitString : numbers)
         {
             number += Integer.parseInt(digitString);
         }
         return number;
+    }
+
+    private static String delimiter(String s)
+    {
+        if (hasCustomDelimiter(s))
+        {
+            int indexOfLineBreak = s.indexOf("\n");
+            return "\\" + s.substring(2, indexOfLineBreak);
+        }
+        return null;
+    }
+
+    private static boolean hasCustomDelimiter(String s)
+    {
+        return s.startsWith("//");
+    }
+
+    private static String[] numbers(String input, String delimiter)
+    {
+        String numbers = input;
+
+        if (delimiter == null)
+        {
+            delimiter = "[\n,]";
+        }
+        else
+        {
+            String[] components = input.split("\n", 2);
+            numbers = components[components.length - 1];
+        }
+
+        return numbers.split(delimiter);
     }
 
 }
