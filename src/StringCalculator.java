@@ -1,5 +1,6 @@
 import com.sun.deploy.util.StringUtils;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,12 +19,25 @@ public class StringCalculator {
             return number;
         }
 
-        String delimiter = delimiter(s);
-        String[] numbers = numbers(s, delimiter);
+        StringDelimiterParser parser = new StringDelimiterParser(s);
+
+        List<String> delimiters = parser.getDelimiters();
+        String n = parser.getNumbers();
+
+        List<String> numbers;
+        if (parser.getHasCustomDelimiters())
+        {
+            numbers = splitNumbersWithCustomDelimiters(n, delimiters);
+        }
+        else
+        {
+            numbers = splitNumbersWithStandardDelimiters(n, delimiters);
+        }
+
         return getSum(numbers);
     }
 
-    private static int getSum(String[] numbers)
+    private static int getSum(List<String> numbers)
     {
         int number = 0;
         List<String> negatives = new ArrayList();
@@ -62,48 +76,47 @@ public class StringCalculator {
         int n = Integer.parseInt(digitString);
         return (n > 1000) ? 0 : n;
     }
-    
-    private static String delimiter(String s)
+
+    private static List<String> splitNumbersWithCustomDelimiters(String input, List<String> delimiters)
     {
-        String customDelimiter = customDelimiter(s);
-        if (customDelimiter != null)
+        List<String> numbers = new ArrayList<>();
+        if (input.length() == 0)
         {
-            return Pattern.quote(customDelimiter);
+            return numbers;
         }
-        return null;
-    }
 
-    private static String customDelimiter(String s)
-    {
-        Pattern p = Pattern.compile("//(?:\\[(.*)\\]|(.))\\n");
-        Matcher m = p.matcher(s);
-        if (m.find())
+        if (delimiters.size() == 1)
         {
-            String customLengthDelimiter = m.group(1);
-            if (customLengthDelimiter == null)
-            {
-                return m.group(2);
-            }
-            return customLengthDelimiter;
-        }
-        return null;
-    }
-
-    private static String[] numbers(String input, String delimiter)
-    {
-        String numbers = input;
-
-        if (delimiter == null)
-        {
-            delimiter = "[\n,]";
+            numbers = Arrays.asList(input.split(delimiters.get(0)));
         }
         else
         {
-            String[] components = input.split("\n", 2);
-            numbers = components[components.length - 1];
+            String remainingNumbers = input;
+
+            for (String delimiter : delimiters)
+            {
+                String[] components = remainingNumbers.split(delimiter, 2);
+                if (components.length > 0)
+                {
+                    numbers.add(components[0]);
+
+                    if (components.length > 1)
+                    {
+                        remainingNumbers = components[1];
+                    }
+                }
+            }
+            numbers.add(remainingNumbers);
         }
 
-        return numbers.split(delimiter);
+        return numbers;
+    }
+
+    private static List<String> splitNumbersWithStandardDelimiters(String input, List<String> delimiters)
+    {
+        String delims = delimiters.stream().reduce("", String::concat);
+        delims = Pattern.quote(delims);
+        return Arrays.asList(input.split("[" + delims + "]"));
     }
 
 }

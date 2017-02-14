@@ -104,4 +104,12 @@ public class StringCalculatorTests {
     {
         assertEquals(6, StringCalculator.Add("//[|||]\n1|||2|||3"));
     }
+
+    @Test
+    void multipleCustomDelimiters()
+    {
+        assertEquals(6, StringCalculator.Add("//[|][%]\n1|2%3"));
+        assertEquals(6, StringCalculator.Add("//[||][%]\n1||2%3"));
+        assertEquals(10, StringCalculator.Add("//[|][%][,]\n1|2%3,4"));
+    }
 }
