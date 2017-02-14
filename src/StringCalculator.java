@@ -21,20 +21,23 @@ public class StringCalculator {
 
         StringDelimiterParser parser = new StringDelimiterParser(s);
 
-        List<String> delimiters = parser.getDelimiters();
         String n = parser.getNumbers();
+        return getSum(getNumbers(parser, n));
+    }
 
+    private static List<String> getNumbers(StringDelimiterParser parser, String input)
+    {
         List<String> numbers;
+        List<String> delimiters = parser.getDelimiters();
         if (parser.getHasCustomDelimiters())
         {
-            numbers = splitNumbersWithCustomDelimiters(n, delimiters);
+            numbers = splitNumbersWithCustomDelimiters(input, delimiters);
         }
         else
         {
-            numbers = splitNumbersWithStandardDelimiters(n, delimiters);
+            numbers = splitNumbersWithStandardDelimiters(input, delimiters);
         }
-
-        return getSum(numbers);
+        return numbers;
     }
 
     private static int getSum(List<String> numbers)
@@ -79,36 +82,39 @@ public class StringCalculator {
 
     private static List<String> splitNumbersWithCustomDelimiters(String input, List<String> delimiters)
     {
-        List<String> numbers = new ArrayList<>();
         if (input.length() == 0)
         {
-            return numbers;
+            return new ArrayList<>();
         }
-
-        if (delimiters.size() == 1)
+        else if (delimiters.size() == 1)
         {
-            numbers = Arrays.asList(input.split(delimiters.get(0)));
+            return Arrays.asList(input.split(delimiters.get(0)));
         }
         else
         {
-            String remainingNumbers = input;
+            return splitNumbersByDelimitersExactly(input, delimiters);
+        }
+    }
 
-            for (String delimiter : delimiters)
+    private static List<String> splitNumbersByDelimitersExactly(String input, List<String> delimiters)
+    {
+        List<String> numbers = new ArrayList<>();
+        String remainingNumbers = input;
+
+        for (String delimiter : delimiters)
+        {
+            String[] components = remainingNumbers.split(delimiter, 2);
+            if (components.length > 0)
             {
-                String[] components = remainingNumbers.split(delimiter, 2);
-                if (components.length > 0)
-                {
-                    numbers.add(components[0]);
+                numbers.add(components[0]);
 
-                    if (components.length > 1)
-                    {
-                        remainingNumbers = components[1];
-                    }
+                if (components.length > 1)
+                {
+                    remainingNumbers = components[1];
                 }
             }
-            numbers.add(remainingNumbers);
         }
-
+        numbers.add(remainingNumbers);
         return numbers;
     }
 
